@@ -111,6 +111,7 @@ ham10000-skin-lesion-classification/
 ├─ results/
 │  ├─ metrics.json
 │  ├─ history.csv
+│  ├─ classification_report.txt
 │  └─ checkpoints/
 │     └─ best_model.pt
 ├─ figures/
