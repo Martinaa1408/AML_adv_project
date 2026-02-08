@@ -1,202 +1,166 @@
-# AML_adv_project - HAM10000 Skin Lesion Classification
+# AML Advanced Project — HAM10000 Skin Lesion Classification
 
-This project addresses **multi-class skin lesion classification** on the **HAM10000** dermatoscopic dataset using a pretrained convolutional neural network with explicit handling of **class imbalance**.
+This repository presents a multi-class skin lesion classification pipeline developed on the **HAM10000 (Skin Cancer MNIST)** dermatoscopic dataset.  
+The project leverages a pretrained convolutional neural network and explicitly addresses severe class imbalance, with emphasis on robust evaluation, reproducibility, and qualitative error analysis.
 
-The focus is on **robust evaluation**, **reproducibility**, and **error analysis**, rather than aggressive overfitting.
+Rather than optimizing for leaderboard performance, the focus is on building a reliable and interpretable experimental pipeline suitable for medical imaging tasks.
 
 ---
 
 ## Dataset
-- **HAM10000** (Skin Cancer MNIST)
-- 10,015 dermatoscopic images
-- 7 diagnostic classes:
-  - akiec, bcc, bkl, df, mel, nv, vasc
-- Strong class imbalance (melanocytic nevi dominate)
 
-Class distribution is shown below:
+- **HAM10000** dermatoscopic image dataset  
+- **10,015** RGB images  
+- **7 diagnostic classes**: akiec, bcc, bkl, df, mel, nv, vasc  
+- Highly imbalanced label distribution (melanocytic nevi dominate)
 
-<p align="center">
-  <img src="figures/class_distribution.png" width="500">
-</p>
+Class distribution:
+
+<img src="figures/class_distribution.png" width="500">
 
 ---
 
-## Method
-- **Backbone**: EfficientNet-B0 (ImageNet pretrained)
-- **Image size**: 224×224
-- **Augmentation**: strong geometric and photometric transformations
-- **Loss**: Weighted Cross-Entropy
-- **Optimizer**: AdamW
-- **Scheduler**: Cosine Annealing
-- **Mixed precision**: enabled (AMP)
-- **Model selection**: best checkpoint by **Validation Macro-F1**
+## Methodology
+
+- **Backbone**: EfficientNet-B0 (ImageNet pretrained)  
+- **Input resolution**: 224 × 224  
+- **Data augmentation**: strong geometric and photometric transformations  
+- **Loss function**: Weighted Cross-Entropy  
+- **Optimizer**: AdamW  
+- **Learning rate schedule**: Cosine Annealing  
+- **Mixed precision training**: enabled (AMP)  
+- **Model selection criterion**: best checkpoint based on validation Macro-F1  
+
+This configuration balances performance, stability, and computational efficiency.
 
 ---
 
 ## Evaluation Protocol
-Due to class imbalance, standard accuracy is insufficient.
+
+Due to the pronounced class imbalance, overall accuracy is not a reliable metric.
 
 **Primary metrics**
-- Macro-F1
-- Balanced Accuracy
+- Macro-F1  
+- Balanced Accuracy  
 
-**Additional analysis**
-- Confusion matrix
-- Misclassification inspection
-- Grad-CAM explainability
+**Additional analyses**
+- Confusion matrix  
+- Qualitative inspection of misclassified samples  
+- Gradient-weighted Class Activation Mapping (Grad-CAM)
 
 ---
 
 ## Results
+
 | Metric | Value |
 |------|------|
 | Best Validation Macro-F1 | ~0.75 |
 | Test Macro-F1 | ~0.74 |
 | Test Balanced Accuracy | ~0.80 |
 
-Confusion matrix on the test set:
+Confusion matrix on the held-out test set:
 
-<p align="center">
-  <img src="figures/confusion_matrix.png" width="500">
-</p>
+<img src="figures/confusion_matrix.png" width="500">
+
+The close alignment between validation and test metrics indicates good generalization.
 
 ---
 
 ## Error Analysis
-Most misclassifications occur between **visually similar lesions**, particularly:
-- melanocytic nevi ↔ melanoma
-- benign keratosis ↔ melanoma
 
-Example misclassified samples:
+Most misclassifications arise between visually similar lesion types, in particular:
+- melanocytic nevi ↔ melanoma  
+- benign keratosis ↔ melanoma  
 
-<p align="center">
-  <img src="figures/misclassifications_grid.png" width="700">
-</p>
+Representative misclassified samples:
+
+<img src="figures/misclassifications_grid.png" width="700">
+
+These errors reflect intrinsic ambiguities in dermatoscopic patterns rather than random model failures.
 
 ---
 
-## Explainability (Grad-CAM)
-Grad-CAM was applied to highlight image regions contributing to predictions.
+## Model Explainability (Grad-CAM)
 
-<p align="center">
-  <img src="figures/gradcam_examples.png" width="700">
-</p>
+Grad-CAM was applied to visualize image regions contributing most strongly to model predictions.
 
-The model focuses on lesion cores and borders, consistent with dermatological criteria.
+<img src="figures/gradcam_examples.png" width="700">
+
+The model consistently focuses on lesion cores and borders, aligning with clinically relevant diagnostic cues.
 
 ---
 
 ## Repository Structure
 
+```text
 ham10000-skin-lesion-classification/
 ├─ README.md
-│  Project overview, methodology, results, and usage instructions
-│
 ├─ requirements.txt
-│  Python dependencies required to run the notebook
-│
 ├─ .gitignore
-│  Files and folders excluded from version control
-│
 ├─ notebooks/
 │  └─ HAM10000_Classification.ipynb
-│     End-to-end pipeline: data loading, training, evaluation, and analysis
-│
 ├─ data/
 │  ├─ splits/
 │  │  ├─ train.csv
 │  │  ├─ val.csv
 │  │  └─ test.csv
-│  │     Fixed stratified train/validation/test splits for reproducibility
-│  │
 │  └─ metadata/
 │     └─ HAM10000_metadata.csv
-│        Original dataset metadata and labels
-│
 ├─ results/
 │  ├─ metrics.json
-│  │  Final evaluation metrics on the test set
-│  │
 │  ├─ history.csv
-│  │  Training and validation metrics recorded per epoch
-│  │
 │  ├─ classification_report.txt
-│  │  Per-class precision, recall, and F1-score
-│  │
 │  └─ checkpoints/
 │     └─ best_model.pt
-│        Best model checkpoint selected by validation Macro-F1
-│
 ├─ figures/
 │  ├─ class_distribution.png
-│  │  Class imbalance visualization
-│  │
 │  ├─ samples_grid.png
-│  │  Example images for each class
-│  │
 │  ├─ confusion_matrix.png
-│  │  Confusion matrix on the test set
-│  │
 │  ├─ misclassifications_grid.png
-│  │  Qualitative error analysis
-│  │
 │  └─ gradcam_examples.png
-│     Grad-CAM visual explanations
-│
 └─ LICENSE
-   Project license (optional)
+```
+
+---
 
 ## How to Run
 
 This project is designed to be executed in **Google Colab**.
 
-1. Open `notebooks/HAM10000_Classification.ipynb`
-2. Enable GPU runtime  
+1. Open the notebook  
+   `notebooks/HAM10000_Classification.ipynb`
+2. Enable GPU support  
    `Runtime → Change runtime type → GPU`
 3. Upload your `kaggle.json` file when prompted
-4. Run all cells in order
+4. Run all cells sequentially
 
-All results (metrics, figures, and checkpoints) are automatically saved.
-
----
-
-## Results Summary
-
-The final model was selected based on **validation Macro-F1**.
-
-- Best Validation Macro-F1: ~0.75  
-- Test Macro-F1: ~0.74  
-- Test Balanced Accuracy: ~0.80  
-
-The confusion matrix and qualitative analyses highlight that most errors occur
-between visually similar lesion types, reflecting the intrinsic difficulty of
-dermatoscopic diagnosis.
+All outputs (metrics, figures, logs, and checkpoints) are automatically saved
+in the `results/` and `figures/` directories.
 
 ---
 
 ## Limitations and Future Work
 
-- The dataset presents strong class imbalance, which remains a challenge
-  despite weighted loss strategies.
-- No ensemble or multi-scale inference was used.
-- The model relies solely on image data without clinical metadata.
+- Severe class imbalance remains challenging despite weighted loss strategies
+- No ensemble methods or multi-scale inference were explored
+- Only image data were used; no clinical metadata were available
 
-Future improvements may include:
+Possible future improvements include:
 - Ensemble models
-- Advanced imbalance-aware losses
-- Integration of patient-level metadata
+- Advanced imbalance-aware loss functions
+- Integration of patient-level or clinical features
 
 ---
 
 ## Notes
 
-This project was developed for educational purposes.
-The focus is on reproducibility, clarity, and realistic evaluation rather than
-leaderboard-oriented optimization.
+This project was developed for educational purposes within the context of an
+advanced machine learning course.  
+The focus is on **reproducibility**, **clarity**, and **realistic evaluation**
+rather than leaderboard-oriented optimization.
 
 ---
 
 ## License
 
-This project is released under the MIT License.
-
+This project is released under the **MIT License**.
