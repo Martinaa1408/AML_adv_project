@@ -1,0 +1,8 @@
+Recent queries in gene
+Search,Query,Items found,Time
+#8,"Search (""homo sapiens""[Organism] OR ""mus musculus""[Organism] OR ""drosophila melanogaster""[Organism]) NOT (""source mitochondrion""[Properties] OR ""source extrachromosomal""[Properties]) AND (""srcdb swiss prot""[Properties] OR ""srcdb refseq reviewed""[Properties]) NOT ""genetype protein coding""[Properties] Schema: base",168618,09:02:26
+#7,"Search (""homo sapiens""[Organism] OR ""mus musculus""[Organism] OR ""drosophila melanogaster""[Organism]) NOT (""source mitochondrion""[Properties] OR ""source extrachromosomal""[Properties]) AND (""srcdb swiss prot""[Properties] OR ""srcdb refseq reviewed""[Properties]) NOT ""genetype protein coding""[Properties] Schema: base Filters: Current",168424,09:02:25
+#6,"Search (((((((""homo sapiens""[Organism]) OR ""mus musculus""[Organism]) OR ""drosophila melanogaster""[Organism]) NOT ""source mitochondrion""[Properties]) OR ""source extrachromosomal""[Properties]) AND ""srcdb swiss prot""[Properties]) OR ""srcdb refseq reviewed""[Properties]) AND ""genetype protein coding""[Properties] Schema: base",469584,09:01:43
+#5,"Search (((((((""homo sapiens""[Organism]) OR ""mus musculus""[Organism]) OR ""drosophila melanogaster""[Organism]) NOT ""source mitochondrion""[Properties]) OR ""source extrachromosomal""[Properties]) AND ""srcdb swiss prot""[Properties]) OR ""srcdb refseq reviewed""[Properties]) AND ""genetype protein coding""[Properties] Schema: base Filters: Current",252915,09:01:41
+
+

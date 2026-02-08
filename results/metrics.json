@@ -1,0 +1,7 @@
+{
+  "test_loss": 0.5016247034072876,
+  "test_macro_f1": 0.7384830848170438,
+  "test_balanced_acc": 0.7970496191872624,
+  "best_val_macro_f1": 0.7527037246116943,
+  "best_epoch": 15
+}
