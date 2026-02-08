@@ -1,6 +1,6 @@
 # AML Advanced Project — HAM10000 Skin Lesion Classification
 
-<img width="700" height="666" alt="image" src="https://github.com/user-attachments/assets/dd279655-17f7-4f6a-8683-b500dd9ccab0" />
+<img width="509" height="476" alt="image" src="https://github.com/user-attachments/assets/a6e346b2-37a7-40ee-8589-ca3c81424ab3" />
 
 This repository presents a multi-class skin lesion classification pipeline developed on the **HAM10000 (Skin Cancer MNIST)** dermatoscopic dataset.  
 The project leverages a pretrained convolutional neural network and explicitly addresses severe class imbalance, with emphasis on robust evaluation, reproducibility, and qualitative error analysis.
